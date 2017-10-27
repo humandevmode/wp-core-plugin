@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Core\\": "lib"
+    }
+  },
+  "require": {
+    "webdevstudios/cmb2": "v2.2.5.3"
+  }
+}
