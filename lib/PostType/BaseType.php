@@ -5,16 +5,13 @@ namespace Core\PostType;
 use WP_Post;
 
 abstract class BaseType {
-	protected $taxonomies;
+	const TYPE = '';
 
 	public function __construct() {
-		$this->taxonomies = [];
+		$this->init();
 
 		add_action('init', [$this, 'register']);
 
-		if (method_exists($this, 'registerTaxonomies')) {
-			add_action('init', [$this, 'registerTaxonomies']);
-		}
 		if (method_exists($this, 'registerFields')) {
 			add_action('cmb2_admin_init', [$this, 'registerFields']);
 		}
@@ -31,21 +28,17 @@ abstract class BaseType {
 		}
 	}
 
-	abstract static function getName();
-
 	abstract static function getArgs();
 
-	public function register() {
-		register_post_type(static::getName(), $this->getArgs());
+	public function init() {
 	}
 
-	public function registerTaxonomy(string $taxonomyName) {
-		$taxonomy = new $taxonomyName(static::getName());
-		$this->taxonomies[] = $taxonomy;
+	public function register() {
+		register_post_type(static::TYPE, $this->getArgs());
 	}
 
 	public function _beforeInsert($data) {
-		if ($data['post_type'] == static::getName()) {
+		if ($data['post_type'] == static::TYPE) {
 			call_user_func_array([$this, 'beforeInsert'], [$data]);
 		}
 
@@ -53,13 +46,13 @@ abstract class BaseType {
 	}
 
 	public function _afterInsert($post_id, WP_Post $post, $update) {
-		if ($post->post_type === static::getName()) {
+		if ($post->post_type === static::TYPE) {
 			call_user_func_array([$this, 'afterInsert'], [$post_id, $post, $update]);
 		}
 	}
 
 	public function _createUrl($url, WP_Post $post, $leavename, $sample) {
-		if ($post->post_type == static::getName()) {
+		if ($post->post_type == static::TYPE) {
 			return call_user_func_array([$this, 'createUrl'], [$url, $post, $leavename, $sample]);
 		}
 

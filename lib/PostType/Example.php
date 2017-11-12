@@ -2,12 +2,8 @@
 
 namespace Core\PostType;
 
-use Core\Taxonomy;
-
 class Example extends BaseType {
-	public static function getName() {
-		return 'example';
-	}
+	const TYPE = 'Example';
 
 	public static function getArgs() {
 		return [
@@ -39,9 +35,5 @@ class Example extends BaseType {
 			'can_export' => true,
 			'menu_icon' => 'dashicons-admin-site',
 		];
-	}
-
-	public function registerTaxonomies() {
-		$this->registerTaxonomy(Taxonomy\Example::class);
 	}
 }

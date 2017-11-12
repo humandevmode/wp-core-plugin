@@ -2,12 +2,18 @@
 
 namespace Core\Taxonomy;
 
+use Core\PostType;
+
 class Example extends BaseTaxonomy {
-	public static function getName() {
-		return 'example';
+	const TYPE = 'Example';
+
+	public function getPostTypes() {
+		return [
+			PostType\Example::TYPE
+		];
 	}
 
-	public static function getArgs() {
+	public function getArgs() {
 		return [
 			'labels' => [
 				'menu_name' => 'Example',
@@ -17,9 +23,5 @@ class Example extends BaseTaxonomy {
 			'public' => true,
 			'hierarchical' => true
 		];
-	}
-
-	public function registerFields() {
-
 	}
 }
