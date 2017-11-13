@@ -5,7 +5,7 @@ namespace Core\PostType;
 class Example extends BaseType {
 	const TYPE = 'Example';
 
-	public static function getArgs() {
+	public function getArgs() {
 		return [
 			'labels' => [
 				'menu_name' => 'Examples',

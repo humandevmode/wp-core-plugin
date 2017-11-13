@@ -28,7 +28,7 @@ abstract class BaseType {
 		}
 	}
 
-	abstract static function getArgs();
+	abstract function getArgs();
 
 	public function init() {
 	}
