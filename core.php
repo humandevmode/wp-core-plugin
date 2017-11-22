@@ -21,5 +21,5 @@ $postTypes = [
 ];
 
 if (class_exists('WP_CLI')) {
-	WP_CLI::add_command('tmp', Cli\Tmp::class);
+	WP_CLI::add_command('example', Cli\ExampleCommand::class);
 }

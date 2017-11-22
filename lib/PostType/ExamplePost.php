@@ -2,15 +2,15 @@
 
 namespace Core\PostType;
 
-class Example extends BaseType {
-	const TYPE = 'Example';
+class ExamplePost extends BasePost {
+	const TYPE = 'example';
 
 	public function getArgs() {
 		return [
 			'labels' => [
 				'menu_name' => 'Examples',
-				'name' => 'Example',
-				'singular_name' => 'Example',
+				'name' => 'ExamplePost',
+				'singular_name' => 'ExamplePost',
 				'add_new' => 'Add new',
 				'add_new_item' => 'Add new',
 				'edit_item' => 'Edit',

@@ -4,7 +4,7 @@ namespace Core\PostType;
 
 use WP_Post;
 
-abstract class BaseType {
+abstract class BasePost {
 	const TYPE = '';
 
 	public function __construct() {
