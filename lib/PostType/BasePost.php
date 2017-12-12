@@ -39,7 +39,7 @@ abstract class BasePost {
 
 	public function _beforeInsert($data) {
 		if ($data['post_type'] == static::TYPE) {
-			call_user_func_array([$this, 'beforeInsert'], [$data]);
+			$data = call_user_func_array([$this, 'beforeInsert'], [$data]);
 		}
 
 		return $data;

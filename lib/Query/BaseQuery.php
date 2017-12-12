@@ -2,7 +2,9 @@
 
 namespace Core\Query;
 
-class BaseQuery extends \WP_Query {
+use WP_Query;
+
+class BaseQuery extends WP_Query {
 	public function __construct(array $query) {
 		if (isset($query['date_query'])) {
 			$query['date_query'] = $this->replaceDateQuery($query['date_query']);
