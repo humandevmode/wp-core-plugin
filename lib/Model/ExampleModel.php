@@ -2,6 +2,6 @@
 
 namespace Core\Model;
 
-class ExampleModel extends BaseModel {
+class ExampleModel extends PostModel {
 
 }
