@@ -44,4 +44,8 @@ class PostHelper {
 			return false;
 		});
 	}
+
+	public static function groupByTerm() {
+
+	}
 }

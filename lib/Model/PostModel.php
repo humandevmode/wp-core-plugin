@@ -24,12 +24,20 @@ class PostModel {
 		return get_the_title($this->post);
 	}
 
+	public function title() {
+		return get_the_title($this->post);
+	}
+
 	public function getName() {
 		return $this->post->post_name;
 	}
 
-	public function getUrl() {
+	public function getPermalink() {
 		return get_permalink($this->post);
+	}
+
+	public function permalink() {
+		return esc_url(apply_filters('the_permalink', $this->getPermalink()));
 	}
 
 	public function getThumb($size = 'post-thumbnail', $attr = '') {
@@ -53,6 +61,21 @@ class PostModel {
 		$post = $orig_post;
 
 		return $content;
+	}
+
+	public function content() {
+		$content = apply_filters('the_content', $this->getContent());
+		$content = str_replace(']]>', ']]&gt;', $content);
+
+		return $content;
+	}
+
+	public function getExcerpt() {
+		return get_the_excerpt($this->post);
+	}
+
+	public function excerpt() {
+		return apply_filters('the_excerpt', $this->getExcerpt());
 	}
 
 	public function getDate($format) {
