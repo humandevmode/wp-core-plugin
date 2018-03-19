@@ -22,16 +22,12 @@ abstract class BaseForm {
 
 	public function handle() {
 		try {
-			$this->validate();
+			$this->_validate();
 			$this->_handle();
 		}
 		catch (\Exception $exception) {
 
 		}
-	}
-
-	public function validate() {
-		$this->_validate();
 	}
 
 	abstract protected function _handle();
