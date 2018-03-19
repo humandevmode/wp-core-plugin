@@ -20,70 +20,76 @@ class PostModel {
 		return $this->post->ID;
 	}
 
-	public function getTitle() {
-		return get_the_title($this->post);
+	public function getStatus() {
+		return $this->post->post_status;
 	}
 
-	public function title() {
-		return get_the_title($this->post);
+	public function getType() {
+		return $this->post->post_type;
 	}
 
 	public function getName() {
 		return $this->post->post_name;
 	}
 
-	public function getPermalink() {
-		return get_permalink($this->post);
+	public function getTitle() {
+		return get_the_title($this->post);
 	}
 
-	public function permalink() {
-		return esc_url(apply_filters('the_permalink', $this->getPermalink()));
+	public function getPermalink($raw = false) {
+		$result = get_permalink($this->post);
+		$result = $raw ? $result : esc_url(apply_filters('the_permalink', $result));
+
+		return $result;
 	}
 
-	public function getThumb($size = 'post-thumbnail', $attr = '') {
+	public function hasThumbnail() {
+		return has_post_thumbnail($this->post);
+	}
+
+	public function getThumbnail($size = 'post-thumbnail', $attr = '') {
 		return get_the_post_thumbnail($this->post, $size, $attr);
-	}
-
-	protected function getMeta(string $key, bool $single = true) {
-		return get_post_meta($this->getID(), $key, $single);
 	}
 
 	public function hasContent() {
 		return !empty($this->post->post_content);
 	}
 
-	public function getContent() {
+	public function getContent($raw = false) {
 		global $post;
 
 		$orig_post = $post;
 		$post = $this->post;
 		$content = get_the_content();
+		$content = $raw ? $content : str_replace(']]>', ']]&gt;', apply_filters('the_content', $content));
 		$post = $orig_post;
 
 		return $content;
 	}
 
-	public function content() {
-		$content = apply_filters('the_content', $this->getContent());
-		$content = str_replace(']]>', ']]&gt;', $content);
-
-		return $content;
+	public function getMeta(string $key, bool $single = true) {
+		return get_post_meta($this->getID(), $key, $single);
 	}
 
-	public function getExcerpt() {
-		return get_the_excerpt($this->post);
+	public function getExcerpt($raw = false) {
+		$result = get_the_excerpt($this->post);
+		$result = $raw ? $result : apply_filters('the_excerpt', $result);
+
+		return $result;
 	}
 
-	public function excerpt() {
-		return apply_filters('the_excerpt', $this->getExcerpt());
+	public function getDate($format = '', $raw = false) {
+		$result = get_the_date('', $this->post);
+		$result = $raw ? $result : apply_filters('the_date', $result, $format, '', '');
+
+		return $result;
 	}
 
-	public function getDate($format) {
-		return (new DateTime($this->post->post_date))->format($format);
-	}
+	public function getTime($format = '', $raw = false) {
+		$result = get_the_time($format, $this->post);
+		$result = $raw ? $result : apply_filters('the_time', $result, $format);
 
-	public function getModifiedDate($format) {
-		return (new DateTime($this->post->post_modified))->format($format);
+		return $result;
 	}
 
 	public function getDateTime($gmt = false) {
@@ -100,13 +106,5 @@ class PostModel {
 		}
 
 		return new DateTime($this->post->post_modified);
-	}
-
-	public function getStatus() {
-		return $this->post->post_status;
-	}
-
-	public function getType() {
-		return $this->post->post_type;
 	}
 }

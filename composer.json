@@ -6,6 +6,7 @@
   },
   "require": {
     "webdevstudios/cmb2": "v2.2.5.3",
-    "mobiledetect/mobiledetectlib": "^2.8"
+    "mobiledetect/mobiledetectlib": "^2.8",
+    "respect/validation": "^1.1"
   }
 }
