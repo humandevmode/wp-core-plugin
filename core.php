@@ -17,9 +17,12 @@ use Core\Install;
 
 register_activation_hook(__FILE__, [Install::class, 'init']);
 
-$postTypes = [
-];
+$postTypes = [];
 
 if (class_exists('WP_CLI')) {
-	WP_CLI::add_command('example', Cli\ExampleCommand::class);
+	try {
+		WP_CLI::add_command('example', Cli\ExampleCommand::class);
+	}
+	catch (Exception $exception) {
+	}
 }

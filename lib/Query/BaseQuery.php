@@ -13,6 +13,10 @@ class BaseQuery extends WP_Query {
 		parent::__construct($query);
 	}
 
+	public function getModel() {
+		return new PostModel($this->post);
+	}
+
 	protected function replaceDateQuery($date_query) {
 		$replaces = [
 			'_yesterday' => [

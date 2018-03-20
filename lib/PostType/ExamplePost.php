@@ -21,16 +21,16 @@ class ExamplePost extends BasePost {
 				'not_found_in_trash' => 'Ничего не найдено',
 			],
 			'hierarchical' => false,
-			'supports' => [
+//			'supports' => [
 //				'title',
 //				'editor',
 //				'thumbnail'
-			],
-			'menu_position' => 3,
+//			],
+//			'menu_position' => 3,
 			'public' => true,
 			'publicly_queryable' => true,
 			'exclude_from_search' => false,
-			'has_archive' => true,
+			'has_archive' => false,
 			'query_var' => true,
 			'can_export' => true,
 			'menu_icon' => 'dashicons-admin-site',

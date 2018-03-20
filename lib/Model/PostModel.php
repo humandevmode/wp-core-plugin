@@ -92,19 +92,19 @@ class PostModel {
 		return $result;
 	}
 
-	public function getDateTime($gmt = false) {
-		if ($gmt) {
-			return new DateTime($this->post->post_date_gmt, new DateTimeZone('GMT'));
-		}
-
+	public function getDateTime() {
 		return new DateTime($this->post->post_date);
 	}
 
-	public function getModifiedDateTime($gmt = false) {
-		if ($gmt) {
-			return new DateTime($this->post->post_modified_gmt, new DateTimeZone('GMT'));
-		}
+	public function getGmtDateTime() {
+		return new DateTime($this->post->post_date_gmt, new DateTimeZone('GMT'));
+	}
 
+	public function getModifiedDateTime() {
 		return new DateTime($this->post->post_modified);
+	}
+
+	public function getGmtModifiedDateTime() {
+		return new DateTime($this->post->post_modified_gmt, new DateTimeZone('GMT'));
 	}
 }
