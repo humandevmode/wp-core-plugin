@@ -2,50 +2,49 @@
 
 namespace Core\Helpers;
 
+use WP_Error;
 use WP_Post;
-use DateTime;
 
 class PostHelper {
-	/**
-	 * @param WP_Post[] $posts
-	 * @param int $order
-	 * @return WP_Post[]
-	 */
-	public static function sortByDate(array $posts, $order = SORT_ASC) {
-		usort($posts, function (WP_Post $post1, WP_Post $post2) use ($order) {
-			$time1 = get_the_time('U', $post1);
-			$time2 = get_the_time('U', $post2);
-			if ($time1 > $time2) {
-				return $order == SORT_ASC ? 1 : -1;
-			}
-			elseif ($time1 < $time2) {
-				return $order == SORT_ASC ? -1 : 1;
-			}
-
-			return 0;
-		});
-
-		return $posts;
+	public static function sortByDate(WP_Post $post1, WP_Post $post2, $order = SORT_ASC) {
+		if ($order == SORT_DESC) {
+			return strcmp(date('U', $post2->post_date), date('U', $post1->post_date));
+		}
+		else {
+			return strcmp(date('U', $post1->post_date), date('U', $post2->post_date));
+		}
 	}
 
 	/**
-	 * @param WP_Post[] $posts
-	 * @param DateTime $date
-	 * @return array
+	 * @param string $slug
+	 * @param array $args
+	 * @return int|WP_Error
+	 * @throws \Exception
 	 */
-	public static function filterByDate(array $posts, DateTime $date) {
-		$day = $date->format('Y-m-d');
+	public static function ensurePageExist(string $slug, array $args = []) {
+		$page = get_page_by_path($slug);
 
-		return array_filter($posts, function (WP_Post $post) use ($day) {
-			if (date('Y-m-d', strtotime($post->post_date)) == $day) {
-				return true;
-			}
+		if ($page instanceof WP_Post) {
+			return $page->ID;
+		}
 
-			return false;
-		});
-	}
+		$args = wp_parse_args($args, [
+			'post_name' => $slug,
+			'post_title' => $slug,
+			'post_status' => 'publish',
+			'post_type' => 'page',
+		]);
 
-	public static function groupByTerm() {
+		$result = wp_insert_post([
+			'post_name' => $args['post_name'],
+			'post_title' => $args['post_title'],
+			'post_type' => $args['post_type'],
+			'post_status' => $args['post_status'],
+		]);
+		if (is_int($result)) {
+			return $result;
+		}
 
+		throw new \Exception(sprintf('Can\'t create page "%s"', $slug));
 	}
 }

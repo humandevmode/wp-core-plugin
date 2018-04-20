@@ -47,8 +47,15 @@ class PostModel {
 		return has_post_thumbnail($this->post);
 	}
 
-	public function getThumbnail($size = 'post-thumbnail', $attr = '') {
-		return get_the_post_thumbnail($this->post, $size, $attr);
+	public function getThumbnail(array $args = []) {
+		$args = wp_parse_args($args, [
+			'size' => 'post-thumbnail'
+		]);
+		$attributes = array_filter($args, function ($value, $key) {
+			return $key !== 'size';
+		}, ARRAY_FILTER_USE_BOTH);
+
+		return get_the_post_thumbnail($this->post, $args['size'], $attributes);
 	}
 
 	public function hasContent() {
