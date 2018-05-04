@@ -1,12 +1,12 @@
 <?php
 
-namespace Core\Model;
+namespace Core\Models\Posts;
 
 use DateTime;
 use DateTimeZone;
 use WP_Post;
 
-class PostModel {
+class BasePost {
 	/**
 	 * @var WP_Post
 	 */
@@ -43,6 +43,10 @@ class PostModel {
 		return $result;
 	}
 
+	public function getMeta(string $key, bool $single = true) {
+		return get_post_meta($this->getID(), $key, $single);
+	}
+
 	public function hasThumbnail() {
 		return has_post_thumbnail($this->post);
 	}
@@ -72,10 +76,6 @@ class PostModel {
 		$post = $orig_post;
 
 		return $content;
-	}
-
-	public function getMeta(string $key, bool $single = true) {
-		return get_post_meta($this->getID(), $key, $single);
 	}
 
 	public function getExcerpt($raw = false) {

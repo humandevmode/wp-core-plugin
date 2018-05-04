@@ -25,8 +25,9 @@ class ExamplePost extends BasePost {
 //				'title',
 //				'editor',
 //				'thumbnail'
+//				'amp'
 //			],
-//			'menu_position' => 3,
+			'menu_position' => 3,
 			'public' => true,
 			'publicly_queryable' => true,
 			'exclude_from_search' => false,

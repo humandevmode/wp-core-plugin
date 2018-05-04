@@ -83,11 +83,18 @@ class BaseAjax {
 		return $this->errors;
 	}
 
-	public function addError($code, $message, $critical = false) {
+	public function addError($code, $message) {
 		$this->errors->add($code, $message);
-		if ($critical) {
-			throw new Exception();
-		}
+	}
+
+	/**
+	 * @param $code
+	 * @param $message
+	 * @throws Exception
+	 */
+	public function addLastError($code, $message) {
+		$this->addError($code, $message);
+		throw new Exception();
 	}
 
 	public function addMessage($code, $message) {

@@ -2,7 +2,7 @@
 
 namespace Core\Query;
 
-use Core\Model\PostModel;
+use Core\Models\Posts\BasePost;
 use WP_Query;
 
 class BaseQuery extends WP_Query {
@@ -14,7 +14,7 @@ class BaseQuery extends WP_Query {
 	}
 
 	public function getModel() {
-		return new PostModel($this->post);
+		return new BasePost($this->post);
 	}
 
 	protected function replaceDateQuery($date_query) {

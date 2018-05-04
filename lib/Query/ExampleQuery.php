@@ -2,7 +2,7 @@
 
 namespace Core\Query;
 
-use Core\Model\ExampleModel;
+use Core\Models\ExampleModel;
 use Core\PostType\ExamplePost;
 
 class ExampleQuery extends BaseQuery {

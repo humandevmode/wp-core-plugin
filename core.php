@@ -12,7 +12,7 @@ require __DIR__ . '/inc/actions.php';
 require __DIR__ . '/inc/filters.php';
 require __DIR__ . '/inc/helpers.php';
 
-use Core\Cli;
+use Core\Cli\ExampleCommand;
 use Core\Install;
 
 register_activation_hook(__FILE__, [Install::class, 'init']);
@@ -21,7 +21,7 @@ $postTypes = [];
 
 if (class_exists('WP_CLI')) {
 	try {
-		WP_CLI::add_command('example', Cli\ExampleCommand::class);
+		WP_CLI::add_command('example', ExampleCommand::class);
 	}
 	catch (Exception $exception) {
 	}

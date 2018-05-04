@@ -6,21 +6,26 @@ use Core\Ajax\BaseAjax;
 
 class BaseCommand extends BaseAjax {
 	protected $data;
-	protected static $key = '349750a956bca7fd888d3af18b3ee30e';
 
 	public static function getKey() {
-		return static::$key;
+		return get_option('ajax_command_key');
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function validateKey() {
 		if (!isset($_REQUEST['key']) || $_REQUEST['key'] != static::getKey()) {
-			$this->addError('key', 'Access denied', true);
+			$this->addLastError('key', 'Access denied');
 		}
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function validateData() {
 		if (!isset($_REQUEST['data']) || empty($_REQUEST['data'])) {
-			$this->addError('data', 'Data not set', true);
+			$this->addLastError('data', 'Data not set');
 		}
 
 		$data = $_REQUEST['data'];
@@ -28,6 +33,9 @@ class BaseCommand extends BaseAjax {
 		$this->data = json_decode($data, true);
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function validate() {
 		$this->validateKey();
 	}
