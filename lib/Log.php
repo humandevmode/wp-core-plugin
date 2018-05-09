@@ -21,12 +21,12 @@ class Log {
 			'public' => false,
 			'show_ui' => true,
 			'rewrite' => false,
-//			'capability_type' => 'log',
 			'supports' => [
 				'title',
 				'editor',
 			],
 			'can_export' => false,
+//			'capability_type' => 'log',
 		]);
 	}
 
@@ -48,11 +48,11 @@ class Log {
 		return static::insert('warning', $message, $args);
 	}
 
-	protected static function insert(string $level, $message, $args = []) {
+	protected static function insert(string $level, string $message, array $args = []) {
 		$args = wp_parse_args($args, [
 			'post_type' => static::POST_TYPE,
 			'post_title' => $message,
-			'post_content' => var_export($args, true),
+			'post_content' => sprintf('<pre>%s</pre>', var_export($args, true)),
 			'post_status' => 'publish',
 		]);
 
