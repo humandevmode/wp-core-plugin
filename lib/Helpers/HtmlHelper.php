@@ -37,7 +37,7 @@ class HtmlHelper {
 	public static function link(string $anchor, array $attributes = []) {
 		$attributes['href'] = isset($attributes['href']) ? esc_url($attributes['href']) : '';
 
-		return sprintf('<a %s>%s</a>', static::attr($attributes), $anchor);
+		return sprintf('<a %s>%s</a>', static::attr($attributes), esc_html($anchor));
 	}
 
 	public static function externalLink(string $anchor, array $attributes = []) {

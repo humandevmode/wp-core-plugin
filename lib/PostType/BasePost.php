@@ -37,6 +37,22 @@ abstract class BasePost {
 		register_post_type(static::TYPE, $this->getArgs());
 	}
 
+	public function getLabels(array $args = []) {
+		return wp_parse_args($args, [
+//			'menu_name' => 'Examples',
+//			'name' => 'ExamplePost',
+//			'singular_name' => 'ExamplePost',
+//			'add_new' => 'Add new',
+//			'add_new_item' => 'Add new',
+//			'edit_item' => 'Edit',
+//			'new_item' => 'New',
+//			'view_item' => 'View',
+//			'search_items' => 'Search',
+//			'not_found' => 'Ничего не найдено',
+//			'not_found_in_trash' => 'Ничего не найдено',
+		]);
+	}
+
 	public function _beforeInsert($data) {
 		if ($data['post_type'] == static::TYPE) {
 			$data = call_user_func_array([$this, 'beforeInsert'], [$data]);
@@ -45,7 +61,7 @@ abstract class BasePost {
 		return $data;
 	}
 
-	public function _afterInsert($post_id, WP_Post $post, $update) {
+	public function _afterInsert(int $post_id, WP_Post $post, bool $update) {
 		if ($post->post_type === static::TYPE) {
 			call_user_func_array([$this, 'afterInsert'], [$post_id, $post, $update]);
 		}

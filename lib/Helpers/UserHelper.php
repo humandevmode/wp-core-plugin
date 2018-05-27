@@ -4,14 +4,25 @@ namespace Core\Helpers;
 
 use Detection\MobileDetect;
 
-class VisitorHelper {
+class UserHelper {
 	protected static $detect;
+
+	/**
+	 * @return MobileDetect
+	 */
+	protected static function getMobileDetect() {
+		if (!isset(static::$detect)) {
+			static::$detect = new MobileDetect();
+		}
+
+		return static::$detect;
+	}
 
 	public static function isFromSE() {
 		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 		if (preg_match('/^https?:\/\//', $referer)) {
 			$host = parse_url($referer, PHP_URL_HOST);
-			if ($host and preg_match('/(yandex|google|mail\.ru|rambler\.ru)/', $host)) {
+			if ($host && preg_match('/(yandex|google|mail\.ru|rambler\.ru)/', $host)) {
 				return true;
 			}
 		}
@@ -33,16 +44,5 @@ class VisitorHelper {
 
 	public static function isIOS() {
 		return static::getMobileDetect()->isiOS();
-	}
-
-	/**
-	 * @return MobileDetect
-	 */
-	protected static function getMobileDetect() {
-		if (!isset(static::$detect)) {
-			static::$detect = new MobileDetect();
-		}
-
-		return static::$detect;
 	}
 }

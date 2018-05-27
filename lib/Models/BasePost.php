@@ -1,7 +1,9 @@
 <?php
 
-namespace Core\Models\Posts;
+namespace Core\Models;
 
+use Core\Exceptions\TermNotFound;
+use Core\Traits\MetaData;
 use DateTime;
 use DateTimeZone;
 use WP_Post;
@@ -12,8 +14,14 @@ class BasePost {
 	 */
 	protected $post;
 
+	use MetaData;
+
 	public function __construct(WP_Post $post) {
 		$this->post = $post;
+	}
+
+	public function getMetaType() {
+		return 'post';
 	}
 
 	public function getID() {
@@ -43,11 +51,29 @@ class BasePost {
 		return $result;
 	}
 
-	public function getMeta(string $key, bool $single = true) {
-		return get_post_meta($this->getID(), $key, $single);
+	/**
+	 * @param string $taxonomy
+	 * @return \WP_Term
+	 * @throws \Exception
+	 */
+	public function getTerm(string $taxonomy) {
+		$terms = wp_get_post_terms($this->getID(), $taxonomy);
+		if ($terms) {
+			return $terms[0];
+		}
+
+		throw new TermNotFound('Can\'t find term of taxonomy ' . $taxonomy);
 	}
 
-	public function hasThumbnail() {
+	/**
+	 * @param string $taxonomy
+	 * @return \WP_Term[]
+	 */
+	public function getTerms(string $taxonomy) {
+		return wp_get_post_terms($this->getID(), $taxonomy);
+	}
+
+	public function hasThumbnail(): bool {
 		return has_post_thumbnail($this->post);
 	}
 
@@ -62,7 +88,7 @@ class BasePost {
 		return get_the_post_thumbnail($this->post, $args['size'], $attributes);
 	}
 
-	public function hasContent() {
+	public function hasContent(): bool {
 		return !empty($this->post->post_content);
 	}
 

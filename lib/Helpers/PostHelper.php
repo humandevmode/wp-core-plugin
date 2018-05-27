@@ -8,11 +8,10 @@ use WP_Post;
 class PostHelper {
 	public static function sortByDate(WP_Post $post1, WP_Post $post2, $order = SORT_ASC) {
 		if ($order == SORT_DESC) {
-			return strcmp(date('U', $post2->post_date), date('U', $post1->post_date));
+			return date('U', $post2->post_date) <=> date('U', $post1->post_date);
 		}
-		else {
-			return strcmp(date('U', $post1->post_date), date('U', $post2->post_date));
-		}
+
+		return date('U', $post1->post_date) <=> date('U', $post2->post_date);
 	}
 
 	/**

@@ -8,12 +8,12 @@ abstract class BaseTaxonomy {
 	public function __construct() {
 		add_action('init', [$this, 'register']);
 
-		if (method_exists($this, 'createUrl')) {
-			add_filter('term_link', [$this, '_createUrl'], 1, 3);
-		}
-
 		if (method_exists($this, 'registerFields')) {
 			add_action('cmb2_admin_init', [$this, 'registerFields']);
+		}
+
+		if (method_exists($this, 'createUrl')) {
+			add_filter('term_link', [$this, '_createUrl'], 1, 3);
 		}
 	}
 

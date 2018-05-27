@@ -2,45 +2,21 @@
 
 namespace Core\Query;
 
-use Core\Models\Posts\BasePost;
+use Core\Models\BasePost;
 use WP_Query;
 
 class BaseQuery extends WP_Query {
-	public function __construct(array $query) {
-		if (isset($query['date_query'])) {
-			$query['date_query'] = $this->replaceDateQuery($query['date_query']);
-		}
-		parent::__construct($query);
-	}
-
 	public function getModel() {
-		return new BasePost($this->post);
+		return $this->createModel($this->post);
 	}
 
-	protected function replaceDateQuery($date_query) {
-		$replaces = [
-			'_yesterday' => [
-				'after' => 'yesterday -1 sec',
-				'before' => 'today',
-			],
-			'_today' => [
-				'after' => 'today -1 sec',
-				'before' => 'tomorrow',
-			],
-			'_today_future' => [
-				'after' => 'now',
-				'before' => 'tomorrow'
-			],
-			'_tomorrow' => [
-				'after' => 'tomorrow -1 sec',
-				'before' => 'tomorrow +1 day',
-			]
-		];
+	public function createModel(\WP_Post $post) {
+		return new BasePost($post);
+	}
 
-		if (is_string($date_query) && isset($replaces[$date_query])) {
-			$date_query = $replaces[$date_query];
+	public function getModelsGenerator() {
+		foreach ($this->posts as $post) {
+			yield $this->createModel($post);
 		}
-
-		return $date_query;
 	}
 }
