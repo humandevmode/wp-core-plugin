@@ -2,6 +2,7 @@
 
 namespace Core\Exceptions;
 
-class UserNotFound extends CoreException {
+class UserNotFound extends CoreException
+{
 
 }

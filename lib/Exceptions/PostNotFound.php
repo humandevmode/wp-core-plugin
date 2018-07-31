@@ -2,6 +2,7 @@
 
 namespace Core\Exceptions;
 
-class PostNotFound extends CoreException {
+class PostNotFound extends CoreException
+{
 
 }

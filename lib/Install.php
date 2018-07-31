@@ -2,8 +2,10 @@
 
 namespace Core;
 
-class Install {
-	public static function init() {
+class Install
+{
+  public static function init()
+  {
 
-	}
+  }
 }

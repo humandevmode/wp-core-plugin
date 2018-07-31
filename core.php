@@ -6,11 +6,11 @@
  * Version: 0.0.1
  */
 
-require __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/vendor/webdevstudios/cmb2/init.php';
-require __DIR__ . '/inc/actions.php';
-require __DIR__ . '/inc/filters.php';
-require __DIR__ . '/inc/helpers.php';
+require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/vendor/webdevstudios/cmb2/init.php';
+require __DIR__.'/inc/actions.php';
+require __DIR__.'/inc/filters.php';
+require __DIR__.'/inc/helpers.php';
 
 use Core\Cli\ExampleCommand;
 use Core\Install;
@@ -23,8 +23,8 @@ Log::register();
 $postTypes = [];
 
 if (class_exists('WP_CLI')) {
-	try {
-		WP_CLI::add_command('example', ExampleCommand::class);
-	} catch (Exception $exception) {
-	}
+  try {
+    WP_CLI::add_command('example', ExampleCommand::class);
+  } catch (Exception $exception) {
+  }
 }

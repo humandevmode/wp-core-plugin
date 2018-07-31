@@ -2,6 +2,7 @@
 
 namespace Core\Exceptions;
 
-class TermNotFound extends CoreException {
-	
+class TermNotFound extends CoreException
+{
+
 }
