@@ -7,16 +7,6 @@ function is_pjax()
   return isset($_SERVER['HTTP_X_PJAX']);
 }
 
-function assets_uri(string $uri)
-{
-  return get_theme_file_uri('assets/'.ltrim($uri, '/'));
-}
-
-function assets_path(string $path)
-{
-  return get_theme_file_path('assets/'.ltrim($path, '/'));
-}
-
 function html_attr($attributes)
 {
   return HtmlHelper::attr($attributes);

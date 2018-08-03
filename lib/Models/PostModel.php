@@ -32,6 +32,11 @@ class PostModel
     return $this->post->ID;
   }
 
+  public function getAuthor()
+  {
+    return new UserModel(get_user_by('ID', $this->post->post_author));
+  }
+
   public function getStatus()
   {
     return $this->post->post_status;
@@ -52,12 +57,9 @@ class PostModel
     return get_the_title($this->post);
   }
 
-  public function getPermalink($raw = false)
+  public function getPermalink()
   {
-    $result = get_permalink($this->post);
-    $result = $raw ? $result : esc_url(apply_filters('the_permalink', $result));
-
-    return $result;
+    return esc_url(apply_filters('the_permalink', get_permalink($this->post), $this->post));
   }
 
   /**
