@@ -15,4 +15,9 @@ trait AcfFields
   {
     update_field($key, $value, $this->getID());
   }
+
+  public function deleteField(string $key)
+  {
+    delete_field($key, $this->getID());
+  }
 }
