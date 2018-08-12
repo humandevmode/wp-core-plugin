@@ -12,20 +12,20 @@ class BaseQuery extends WP_Query
     return new PostModel($post);
   }
 
-  public function each()
+  public function getModel()
+  {
+    return $this->createModel($this->post);
+  }
+
+  public function eachModel()
   {
     foreach ($this->posts as $post) {
       yield $this->createModel($post);
     }
   }
 
-  public function getModel()
-  {
-    return $this->createModel($this->post);
-  }
-
   public function getModels()
   {
-    return iterator_to_array($this->each(), false);
+    return iterator_to_array($this->eachModel(), false);
   }
 }

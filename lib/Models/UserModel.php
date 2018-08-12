@@ -8,10 +8,10 @@ use WP_User;
 
 class UserModel
 {
+  use MetaData;
+
   protected $user;
   protected static $current;
-
-  use MetaData;
 
   public function __construct(WP_User $user)
   {

@@ -16,6 +16,8 @@ use Core\Cli\ExampleCommand;
 use Core\Install;
 use Core\Log;
 
+define('CORE_DIR', __DIR__);
+
 register_activation_hook(__FILE__, [Install::class, 'init']);
 
 Log::register();

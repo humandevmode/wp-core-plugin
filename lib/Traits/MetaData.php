@@ -8,7 +8,7 @@ trait MetaData
 
   abstract public function getMetaType();
 
-  public function getMeta(string $key): string
+  public function getMeta(string $key)
   {
     return get_metadata($this->getMetaType(), $this->getID(), $key, true);
   }
