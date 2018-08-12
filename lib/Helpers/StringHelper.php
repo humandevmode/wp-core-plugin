@@ -25,4 +25,15 @@ class StringHelper
       return $parts[array_rand($parts)];
     }, $text);
   }
+
+  public static function toCamelCase($str, $capitalise_first_char = false)
+  {
+    if ($capitalise_first_char) {
+      $str[0] = mb_strtoupper($str[0]);
+    }
+
+    return preg_replace_callback('/[\s_-]([a-z])/', function ($match) {
+      return mb_strtoupper($match[1]);
+    }, $str);
+  }
 }

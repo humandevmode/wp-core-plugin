@@ -2,6 +2,8 @@
 
 namespace Core\Cli;
 
+use Core\CodeGen\AcfGroupGenerator;
+
 class AcfCommand extends BaseCommand
 {
   protected $local = false;
@@ -27,6 +29,7 @@ class AcfCommand extends BaseCommand
   {
     $this->dumpPhp();
     $this->dumpJson();
+    $this->dumpModels();
   }
 
   public function dumpJson()
@@ -37,6 +40,16 @@ class AcfCommand extends BaseCommand
   public function dumpPhp()
   {
     file_put_contents(CORE_DIR.'/inc/acf_groups.php', static::getPhp());
+  }
+
+  public function dumpModels()
+  {
+    foreach (acf_get_field_groups() as $group) {
+      $group['fields'] = acf_get_fields($group);
+      $generator = new AcfGroupGenerator($group);
+      $code = $generator->getCode();
+      file_put_contents(CORE_DIR."/lib/Models/Fields/{$group['key']}.php", $code);
+    }
   }
 
   public function getGroups()
@@ -59,10 +72,10 @@ class AcfCommand extends BaseCommand
 
   public function getPhp()
   {
-    $result = "<?php\n\nif(function_exists('acf_add_local_field_group')) {"."\r\n"."\r\n";
+    $result = "<?php\n\nif(function_exists('acf_add_local_field_group')) {"."\n"."\n";
     foreach ($this->getGroups() as $field_group) {
       $code = var_export($field_group, true);
-      $result .= "acf_add_local_field_group({$code});"."\r\n"."\r\n";
+      $result .= "acf_add_local_field_group({$code});"."\n"."\n";
     }
     $result .= '}';
 

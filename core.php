@@ -7,12 +7,12 @@
  */
 
 require __DIR__.'/vendor/autoload.php';
-require __DIR__.'/vendor/webdevstudios/cmb2/init.php';
+require __DIR__.'/inc/acf_groups.php';
 require __DIR__.'/inc/actions.php';
 require __DIR__.'/inc/filters.php';
 require __DIR__.'/inc/helpers.php';
 
-use Core\Cli\ExampleCommand;
+use Core\Cli\AcfCommand;
 use Core\Install;
 use Core\Log;
 
@@ -26,7 +26,7 @@ $postTypes = [];
 
 if (class_exists('WP_CLI')) {
   try {
-    WP_CLI::add_command('example', ExampleCommand::class);
+    WP_CLI::add_command('acf', AcfCommand::class);
   } catch (Exception $exception) {
   }
 }
