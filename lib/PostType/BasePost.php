@@ -8,37 +8,37 @@ abstract class BasePost
 {
   const TYPE = '';
 
-  public function __construct()
+  public static function register()
   {
-    $this->init();
+    static::init();
 
-    add_action('init', [$this, 'register']);
+    add_action('init', [static::class, '_register']);
 
-    if (method_exists($this, 'registerFields')) {
-      add_action('cmb2_admin_init', [$this, 'registerFields']);
+    if (method_exists(static::class, 'registerFields')) {
+      add_action('cmb2_admin_init', [static::class, 'registerFields']);
     }
 
-    if (method_exists($this, 'createUrl')) {
-      add_filter('post_type_link', [$this, '_createUrl'], 10, 3);
+    if (method_exists(static::class, 'createUrl')) {
+      add_filter('post_type_link', [static::class, '_createUrl'], 10, 3);
     }
-    if (method_exists($this, 'beforeInsert')) {
-      add_filter('wp_insert_post_data', [$this, '_beforeInsert']);
+    if (method_exists(static::class, 'beforeInsert')) {
+      add_filter('wp_insert_post_data', [static::class, '_beforeInsert']);
     }
 
-    if (method_exists($this, 'afterInsert')) {
-      add_action('wp_insert_post', [$this, '_afterInsert'], 10, 3);
+    if (method_exists(static::class, 'afterInsert')) {
+      add_action('wp_insert_post', [static::class, '_afterInsert'], 10, 3);
     }
   }
 
-  abstract function getArgs();
+  abstract static function getArgs();
 
-  public function init()
+  public static function init()
   {
   }
 
-  public function register()
+  protected static function _register()
   {
-    register_post_type(static::TYPE, $this->getArgs());
+    register_post_type(static::TYPE, static::getArgs());
   }
 
   public function _beforeInsert($data)

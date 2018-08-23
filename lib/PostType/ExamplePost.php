@@ -6,7 +6,7 @@ class ExamplePost extends BasePost
 {
   const TYPE = 'example';
 
-  public function getArgs()
+  public static function getArgs()
   {
     return [
       'labels' => [

@@ -2,11 +2,20 @@
 
 namespace Core\Query;
 
+use Core\Models\PostModel;
+
+/**
+ * Class PostQuery
+ * @package Core\Query
+ *
+ * @method PostModel getModel()
+ * @method PostModel[] getModels()
+ * @method \Generator|PostModel[] eachModels()
+ */
 class PostQuery extends BaseQuery
 {
-  public function __construct(array $query = [])
+  public function createModel(\WP_Post $post)
   {
-    $query['post_type'] = 'post';
-    parent::__construct($query);
+    return new PostModel($post);
   }
 }

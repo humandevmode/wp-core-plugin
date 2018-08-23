@@ -20,8 +20,17 @@ class BaseCommand extends WP_CLI_Command
    *
    * @throws WP_CLI\ExitException
    */
-  protected function error($message)
+  protected function lastError($message)
   {
     WP_CLI::error($message);
+  }
+
+  protected function error($message)
+  {
+    try {
+      WP_CLI::error($message);
+    } catch (\Exception $exception) {
+
+    }
   }
 }

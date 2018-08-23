@@ -12,7 +12,7 @@ require __DIR__.'/inc/actions.php';
 require __DIR__.'/inc/filters.php';
 require __DIR__.'/inc/helpers.php';
 
-use Core\Cli\AcfCommand;
+use Core\Cli;
 use Core\Install;
 use Core\Log;
 
@@ -22,11 +22,10 @@ register_activation_hook(__FILE__, [Install::class, 'init']);
 
 Log::register();
 
-$postTypes = [];
-
 if (class_exists('WP_CLI')) {
   try {
-    WP_CLI::add_command('acf', AcfCommand::class);
+    WP_CLI::add_command('acf', Cli\AcfCommand::class);
+    WP_CLI::add_command('dev', Cli\DevCommand::class);
   } catch (Exception $exception) {
   }
 }
